@@ -1,15 +1,18 @@
-.section{
+@import "../../node_modules/bootstrap/dist/css/bootstrap.css";
+
+.section {
   border-bottom: 1px solid lightgray;
   padding-bottom: 10px;
 }
 
-.task{
+.task {
   cursor: pointer;
   padding-top: 10px;
   padding-bottom: 15px;
   border-bottom: 1px solid lightgray;
 
-  span{
+
+  span > .round {
     border-radius: 50%;
     margin-right: 10px;
     display: inline-flex;
@@ -17,39 +20,132 @@
     top: 5px;
     border: 1px solid lightgray;
 
-    svg{
+    svg {
+      visibility: hidden;
+      border-radius: 50%;
+    }
+
+  }
+
+  span {
+    margin-right: 10px;
+    display: inline-flex;
+    position: relative;
+    top: 5px;
+    border: none;
+
+    svg {
       visibility: hidden;
     }
+
   }
 
   font-size: 14px;
 
-  &:hover{
+  &:hover {
     color: red;
 
-    span svg{
+    span svg {
       visibility: visible;
     }
   }
 }
-.lbl-add-task{
+
+.lbl-add-task {
   color: gray;
   border-bottom: none;
 
-  span{
+  span {
     margin-left: 5px;
     padding: 2px;
     display: inline-flex;
     border: none;
     position: static;
 
-    svg{
+    svg {
       visibility: visible;
     }
   }
 
-  &:hover span{
+  &:hover span {
     background-color: red;
     color: white;
   }
+
+
+}
+
+
+.completed {
+  text-decoration: line-through;
+  color: green;
+
+  .completed-svg {
+    visibility: visible !important;
+  }
+
+  .btn-edit-delete {
+    &:hover {
+      visibility: visible;
+    }
+  }
+}
+
+
+form {
+  margin-top: 10px;
+
+  textarea {
+    margin-right: 50px;
+    margin-left: 6px;
+    width: 80%;
+    height: 5vh;
+  }
+}
+
+.cancel {
+  margin-left: 15px;
+}
+
+.add-task-buttons {
+  margin-left: 6px;
+  margin-top: 6px;
+
+  span {
+    color: gray;
+    font-size: small;
+
+    &:hover {
+      text-decoration: underline;
+      cursor: default;
+    }
+  }
+}
+
+.task-color {
+  color: black;
+}
+
+.btn-edit-delete {
+  position: fixed;
+  left: 100%;
+  transform: translateX(-200%);
+
+}
+
+.task-location {
+  border: none !important;
+  transform: translate(-58px, -7px);
+}
+
+.edit {
+  border: none;
+}
+
+.round {
+  visibility: visible !important;
+}
+
+.add-task {
+  border-radius: 50%;
 }
