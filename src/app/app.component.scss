@@ -77,7 +77,6 @@
 
 
 .completed {
-  text-decoration: line-through;
   color: green;
 
   .completed-svg {
@@ -88,6 +87,10 @@
     &:hover {
       visibility: visible;
     }
+  }
+
+  .task-location{
+    text-decoration: line-through;
   }
 }
 

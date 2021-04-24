@@ -35,4 +35,7 @@ export class AppComponent {
 
   }
 
+  deleteTask():void {
+    alert('Delete Babe');
+  }
 }

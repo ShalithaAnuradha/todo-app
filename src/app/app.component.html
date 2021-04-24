@@ -25,7 +25,7 @@
                   d="M4.42 16.03a1.5 1.5 0 00-.43.9l-.22 2.02a.5.5 0 00.55.55l2.02-.21a1.5 1.5 0 00.9-.44L18.7 7.4a1.5 1.5 0 000-2.12l-.7-.7a1.5 1.5 0 00-2.13 0L4.42 16.02z"></path>
           </g>
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" (click)="$event.stopPropagation();deleteTask()">
           <g fill="none" fill-rule="evenodd">
             <path d="M0 0h24v24H0z"></path>
             <rect width="14" height="1" x="5" y="6" fill="currentColor" rx=".5"></rect>
@@ -66,21 +66,30 @@
 <section>
   <ng-container *ngFor="let task of taskService.taskList;let i = index;">
     <div *ngIf="task.completed" class="task completed" (click)="task.completed=false">
-    <span>
-      <svg class="completed-svg" width="24" height="24">
+    <span >
+      <svg width="24" height="24" class="round" *ngIf="!(edit && i==eventValue)">
         <path fill="currentColor"
               d="M11.23 13.7l-2.15-2a.55.55 0 0 0-.74-.01l.03-.03a.46.46 0 0 0 0 .68L11.24 15l5.4-5.01a.45.45 0 0 0 0-.68l.02.03a.55.55 0 0 0-.73 0l-4.7 4.35z"></path>
       </svg>
+      <form *ngIf="edit&&i==eventValue">
+          <textarea class="text-area" (input)="tasktext=$any($event.target).value;disabled=(tasktext=='');" [defaultValue]=defaultTask (click)="defaultTask='';$event.stopPropagation()" [style]="tasktext==''?'color:gray':'color:black'"></textarea>
+           <div class="add-task-buttons">
+              <button type="button" class="btn btn-sm btn-danger" (click)="edit=!edit;$event.stopPropagation()"
+                      [disabled]="disabled">Add Task
+              </button>
+              <span class="cancel" (click)="edit=!edit;defaultTask=defaultTaskTest; $event.stopPropagation()">Cancel</span>
+          </div>
+    </form>
     </span>
-      <span class="btn-edit-delete ">
-        <svg width="24" height="24">
+      <span class="btn-edit-delete">
+        <svg class="edit" width="24" height="24" (click)="$event.stopPropagation();edit=true;editTask($event,i);">
           <g fill="none" fill-rule="evenodd">
             <path fill="currentColor" d="M9.5 19h10a.5.5 0 110 1h-10a.5.5 0 110-1z"></path>
             <path stroke="currentColor"
                   d="M4.42 16.03a1.5 1.5 0 00-.43.9l-.22 2.02a.5.5 0 00.55.55l2.02-.21a1.5 1.5 0 00.9-.44L18.7 7.4a1.5 1.5 0 000-2.12l-.7-.7a1.5 1.5 0 00-2.13 0L4.42 16.02z"></path>
           </g>
         </svg>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" (click)="$event.stopPropagation();deleteTask()">
           <g fill="none" fill-rule="evenodd">
             <path d="M0 0h24v24H0z"></path>
             <rect width="14" height="1" x="5" y="6" fill="currentColor" rx=".5"></rect>
@@ -90,7 +99,7 @@
           </g>
         </svg>
       </span>
-      <span class="task-location">{{task.text}}</span>
+      <span class="task-location" *ngIf="!(edit && i==eventValue)">{{task.text}}</span>
     </div>
   </ng-container>
   <div class="task lbl-add-task">
