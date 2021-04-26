@@ -1,7 +1,8 @@
 <h1>To-do List</h1>
+<app-abc></app-abc>
 <section>
   <ng-container *ngFor="let task of taskService.taskList;let i = index;">
-    <div *ngIf="!task.completed" class="task" (click)="task.completed=true">
+    <div *ngIf="!(task.completed)" class="task" (click)="task.completed=true">
     <span >
       <svg width="24" height="24" class="round" *ngIf="!(edit && i==eventValue)">
         <path fill="currentColor"

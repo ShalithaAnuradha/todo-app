@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TaskService} from './service/task.service';
 import {Priority} from './util/priority.enum';
 import {Task} from './model/task';
@@ -8,7 +8,7 @@ import {Task} from './model/task';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   editor = false;
   disabled = true;
@@ -21,21 +21,37 @@ export class AppComponent {
   constructor(public taskService: TaskService) {
   }
 
+  ngOnInit(): void {
+    this.taskService.getAllTasks().subscribe(list => {
+      this.taskService.taskList = list;
+      for (const task of this.taskService.taskList) {
+        console.log(task);
+      }
+    });
+  }
+
   saveTask(task: string): void {
-    this.taskService.taskList.push(new Task(task, false, Priority.PRIORITY4));
+    const length = this.taskService.taskList.length;
+    let id = '' + length;
+    if (length < 100) {
+      id = 'T' + length;
+    }
+    if (length < 10) {
+      id = 'T0' + length;
+    }
+
+    this.taskService.taskList.push(new Task(id, task, false, Priority.PRIORITY4));
     this.tasktext = '';
     this.defaultTask = this.defaultTaskTest;
+    // this.taskService.saveTask();
   }
 
   editTask(event: Event, i: number): void {
-    // this.taskService.taskList.splice(i, 1);
-    // (event.target as any).value = i;
-    // console.log(i, (event.target as any).value);
     this.eventValue = i;
 
   }
 
-  deleteTask():void {
+  deleteTask(): void {
     alert('Delete Babe');
   }
 }

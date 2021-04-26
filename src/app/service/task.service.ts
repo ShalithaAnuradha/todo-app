@@ -1,17 +1,22 @@
 import {Injectable} from '@angular/core';
 import {Task} from '../model/task';
-import {Priority} from '../util/priority.enum';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class TaskService {
 
   taskList: Array<Task> = [];
 
-  constructor() {
-    this.taskList.push(new Task('Requirement Elicitation', true, Priority.PRIORITY1));
-    this.taskList.push(new Task('Design UI', true, Priority.PRIORITY1));
-    this.taskList.push(new Task('Develop Code', false, Priority.PRIORITY2));
-    this.taskList.push(new Task('Test the App', false, Priority.PRIORITY3));
-    this.taskList.push(new Task('Deploy the App', false, Priority.PRIORITY4));
+  constructor(private httpClient: HttpClient) {
+    // this.taskList.push(new Task('Requirement Elicitation', true, Priority.PRIORITY1));
   }
+
+  saveTask(): void {
+  }
+
+  getAllTasks(): Observable<Array<Task>> {
+    return this.httpClient.get<Array<Task>>('http://localhost:8080/api/v1/tasks');
+  }
+
 }
