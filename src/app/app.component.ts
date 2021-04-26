@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {TaskService} from './service/task.service';
 import {Priority} from './util/priority.enum';
 import {Task} from './model/task';
@@ -8,7 +8,7 @@ import {Task} from './model/task';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit{
 
   editor = false;
   disabled = true;
@@ -24,26 +24,25 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.taskService.getAllTasks().subscribe(list => {
       this.taskService.taskList = list;
-      for (const task of this.taskService.taskList) {
-        console.log(task);
-      }
     });
   }
 
   saveTask(task: string): void {
-    const length = this.taskService.taskList.length;
-    let id = '' + length;
-    if (length < 100) {
-      id = 'T' + length;
+    const no = this.taskService.taskList.length + 1;
+    let id = 'T' + no;
+    if (no < 100) {
+      id = 'T0' + no;
     }
-    if (length < 10) {
-      id = 'T0' + length;
+    if (no < 10) {
+      id = 'T00' + no;
     }
 
-    this.taskService.taskList.push(new Task(id, task, false, Priority.PRIORITY4));
+    this.taskService.saveTask(new Task(id, task, false, Priority.PRIORITY4)).subscribe(task1 => {
+      console.log(task1);
+      this.taskService.taskList.push(new Task(id, task, false, Priority.PRIORITY4));
+    });
     this.tasktext = '';
     this.defaultTask = this.defaultTaskTest;
-    // this.taskService.saveTask();
   }
 
   editTask(event: Event, i: number): void {
